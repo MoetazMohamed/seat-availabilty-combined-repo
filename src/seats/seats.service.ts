@@ -5,10 +5,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Seat, SeatDocument, SeatType, Floor, SeatStatus } from './entities/seat.entity';
 import { seatDto } from './dto/seat.dto';
-
+import { SeatGateway } from 'src/seats/SeatGateWay';
 @Injectable()
 export class SeatsService {
-  constructor(@InjectModel(Seat.name) private seatModel: Model<SeatDocument>) {}
+  constructor(@InjectModel(Seat.name) private seatModel: Model<SeatDocument>, private readonly seatGateway: SeatGateway) {}
   create(createSeatDto: CreateSeatDto) {
     return 'This action adds a new seat';
   }
@@ -27,7 +27,7 @@ export class SeatsService {
     }, {} as Record<number, Seat[]>);
 
     // Transform the grouped data into an array of seatDto objects
-    const result: seatDto[] = Object.entries(groupedByFloor).map(([floor, seats]) => {
+      const result: seatDto[] = Object.entries(groupedByFloor).map(([floor, seats]) => {
       const availableSeats = seats.filter((seat) => seat.status === 'available');
       const occupiedSeats = seats.filter((seat) => seat.status === 'occupied');
 
@@ -49,16 +49,22 @@ export class SeatsService {
   
 
   async updateSeatAvailibility(seatId: string, availability: boolean) {
+    console.log(availability)
     console.log(seatId, availability)
-    var status = availability ? SeatStatus.AVAILABLE : SeatStatus.OCCUPIED; 
+    const av =  availability 
+    var status =  availability
+    // console.log(status)
+    // console.log("gg",av == true)
     var seat = await this.seatModel.findOneAndUpdate( { seatId },
       { status },
       { new: true });
-
+console.log(seat)
       if (!seat) {
         throw new NotFoundException(`Seat with ID ${seatId} not found`);
       }
-  
+
+     var updatedSeats  = await  this.getSeatsGroupedByFloorAndStatus()
+      this.seatGateway.emitAllSeatsUpdate(updatedSeats);
       return seat;
   }
 

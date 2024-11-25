@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SeatsModule } from './seats/seats.module';
+import { SeatGateway } from './seats/SeatGateWay';
 
 @Module({
   imports: [ MongooseModule.forRoot(

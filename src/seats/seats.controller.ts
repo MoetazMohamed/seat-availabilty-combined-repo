@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { SeatsService } from './seats.service';
 import { CreateSeatDto } from './dto/create-seat.dto';
 import { UpdateSeatDto } from './dto/update-seat.dto';
@@ -22,8 +22,8 @@ export class SeatsController {
     return this.seatsService.findOne(+id);
   }
 
-  @Patch(':id/:availability')
-  updateSeatAvailibility(@Param('id') id: string,@Param('availibility') availibility : boolean) {
+  @Put(':id/:availability')
+  updateSeatAvailibility(@Param('id') id: string,@Param('availability') availibility : boolean) {
     return this.seatsService.updateSeatAvailibility(id,availibility);
   }
 
