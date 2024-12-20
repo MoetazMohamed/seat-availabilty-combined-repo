@@ -1,0 +1,25 @@
+<div class="library-seating">
+  <h2>Main Library Seating Availability</h2>
+  <div class="seat-summary">
+    <span>Total Seats: {{ totalSeats }}</span>
+    <span>Available: {{ availableSeatsCount }}</span>
+  </div>
+
+  <div class="card-container">
+    <div *ngFor="let floor of seating" class="floor-card">
+      <div class="card-header">
+        <h3>Floor {{ floor.floorNumber }}</h3>
+        <p>Total Seats: {{ floor.availableSeats.length + floor.occupiedSeats.length }}</p>
+        <p>Available: {{ floor.availableSeats.length }}</p>
+      </div>
+      <div class="card-body seats-grid">
+        <div *ngFor="let seat of floor.availableSeats" class="seat available">
+          {{ seat.type.charAt(0).toUpperCase() + seat.type.slice(1) }} {{ seat.seatId }} <br> Available
+        </div>
+        <div *ngFor="let seat of floor.occupiedSeats" class="seat occupied">
+          {{ seat.type.charAt(0).toUpperCase() + seat.type.slice(1) }} {{ seat.seatId }} <br> Occupied
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
