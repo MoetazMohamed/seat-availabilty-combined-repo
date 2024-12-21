@@ -6,6 +6,9 @@ This project addresses a common challenge faced by university students: locating
 
 The **Library Seat Availability System** uses TTGO ESP32 boards with pressure sensors to monitor seat occupancy and displays real-time availability on a dynamic web interface accessible to students.
 
+## Demo
+
+Check out the demo of our project on [YouTube](https://www.youtube.com/watch?v=YOUR_VIDEO_ID).
 ## Features
 
 - **Real-time Updates:** Displays seat availability on a web interface with live updates.
